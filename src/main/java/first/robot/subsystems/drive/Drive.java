@@ -326,6 +326,15 @@ public class Drive implements Mechanism {
         return gyroInputs.yawPosition;
     }
 
+      public void setX() {
+        modules[0].runSetpoint(new SwerveModuleVelocity(0, Rotation2d.fromDegrees(45)));
+        modules[1].runSetpoint(new SwerveModuleVelocity(0, Rotation2d.fromDegrees(-45)));
+        modules[2].runSetpoint(new SwerveModuleVelocity(0, Rotation2d.fromDegrees(-45)));
+        modules[3].runSetpoint(new SwerveModuleVelocity(0, Rotation2d.fromDegrees(45)));
+  }
+
+    
+
     /** Resets the current odometry pose. */
     public void resetOdometry(Pose2d pose) {
         resetSimulationPoseCallBack.accept(pose);
@@ -347,4 +356,6 @@ public class Drive implements Mechanism {
     public double getMaxAngularSpeedRadPerSec() {
         return ModuleConstants.maxSpeedMetersPerSec / driveBaseRadius;
     }
+
+
 }

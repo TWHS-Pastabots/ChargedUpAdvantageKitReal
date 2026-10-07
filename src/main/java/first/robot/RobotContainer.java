@@ -10,6 +10,8 @@ import org.wpilib.command3.button.CommandXboxController;
 import org.wpilib.command3.Command;
 import org.wpilib.command3.Trigger;
 
+import org.wpilib.math.geometry.Pose2d;
+import org.wpilib.math.geometry.Rotation2d;
 import first.robot.Constants;
 
 public class RobotContainer {
@@ -84,7 +86,31 @@ public class RobotContainer {
     }
 
     private void configureButtonBindings(){
-        cubeIntakeFront.onTrue(coneIntakeFront());
+
+         m_cont0.a().whileTrue(Command.requiring(m_pivot, m_elevator, m_intake, m_pivot).executing(
+            coro -> {})
+            .named("conePickup"));
+
+        cubeIntakeFront.onTrue(cubeIntakeFront());
+        cubeIntakeBack.onTrue(cubeIntakeBack());
+        coneIntakeBack.onTrue(coneIntakeBack());
+        coneIntakeFront.onTrue(coneIntakeFront());
+        intaking.onTrue(intake());
+        scoreCone.onTrue(coneScoreState());
+        scoreCube.onTrue(cubeScoreState());
+
+        m_cont0.x().whileTrue(
+        Command.requiring(m_drivetrain).executing(
+            coroutine -> {m_drivetrain.setX();})
+            .named("setX"));
+        
+        
+        m_cont0.menu().onTrue(
+        Command.requiring(m_drivetrain).executing(
+            coroutine -> {m_drivetrain.resetOdometry(new Pose2d(0,0, new Rotation2d()));}).
+        named("setX"));
+
+
     }
 
 
@@ -99,7 +125,7 @@ public class RobotContainer {
             m_tilt.scoreConeState();
             m_elevator.scoreConeState();
         })
-        .named("Score Cone");
+        .named("Score Cube");
     }
 
     
@@ -120,7 +146,7 @@ public class RobotContainer {
             m_tilt.coneIntakeBack();
             m_elevator.coneIntake();
         })
-        .named("Score Cone");
+        .named("Cone intake back");
     }
 
     
@@ -131,7 +157,7 @@ public class RobotContainer {
             m_tilt.coneIntakeFront();
             m_elevator.coneIntake();
         })
-        .named("Score Cone");
+        .named("Cone intake front");
     }
         
     private Command cubeIntakeFront(){
@@ -141,7 +167,7 @@ public class RobotContainer {
             m_tilt.cubeIntakeFront();
             m_elevator.cubeIntake();
         })
-        .named("Score Cone");
+        .named("Cube intake front");
     }
             
     private Command cubeIntakeBack(){
@@ -151,7 +177,7 @@ public class RobotContainer {
             m_tilt.cubeIntakeBack();
             m_elevator.cubeIntake();
         })
-        .named("Score Cone");
+        .named("Cube intake back");
     }
 
             
@@ -162,7 +188,7 @@ public class RobotContainer {
             m_tilt.transitionState();
             m_elevator.transitionState();
         })
-        .named("Score Cone");
+        .named("Transition");
     }
 
     private Command outtake(){
@@ -170,7 +196,7 @@ public class RobotContainer {
         .executing(coro -> {m_intake.setPower(1);}).named("Outtake");
     }
 
-    private Command inttake(){
+    private Command intake(){
         return Command.requiring(m_intake)
         .executing(coro -> {m_intake.setPower(1);}).named("Outtake");
     }

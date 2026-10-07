@@ -101,6 +101,7 @@ public class EasySwerveModuleIOReal implements EasySwerveModuleIO {
                     default -> 0;
                 },
                 MotorType.kBrushless);
+                
         driveEncoder = driveSpark.getEncoder();
         turnEncoder = turnSpark.getAbsoluteEncoder();
         driveController = driveSpark.getClosedLoopController();

@@ -1,13 +1,12 @@
 package first.robot;
 
-import first.robot.subsystems.*;
+
 import first.robot.subsystems.drive.Drive;
 import first.robot.subsystems.claw.Claw;
 import first.robot.subsystems.claw.Tilt;
 import first.robot.subsystems.elevator.Elevator;
 import first.robot.subsystems.pivot.Pivot;
 
-import first.robot.subsystems.*;
 import first.robot.subsystems.drive.EasySwerveModuleIOReal;
 import first.robot.subsystems.vision.VisionIOLimelight;
 import first.robot.subsystems.claw.ClawIOReal;

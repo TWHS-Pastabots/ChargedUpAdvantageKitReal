@@ -21,6 +21,8 @@ public class Robot extends LoggedRobot {
   
   // public static CANBus bus1 = CANBus.systemcore(1);
 
+  private final RobotContainer m_robotContainer = new RobotContainer();
+
   public Robot() {
     // Record metadata
     
@@ -57,6 +59,8 @@ public class Robot extends LoggedRobot {
         Logger.setReplaySource(new WPILOGReader(logPath));
         Logger.addDataReceiver(new WPILOGWriter(LogFileUtil.addPathSuffix(logPath, "_sim")));
         break;
+
+        
     }
 
     // Start AdvantageKit logger
@@ -65,7 +69,9 @@ public class Robot extends LoggedRobot {
 
   /** This function is called periodically during all modes. */
   @Override
-  public void robotPeriodic() {}
+  public void robotPeriodic() {
+
+  }
 
   /** This function is run once each time the robot enters autonomous mode. */
   @Override

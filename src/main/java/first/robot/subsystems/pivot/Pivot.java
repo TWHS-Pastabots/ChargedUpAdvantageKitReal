@@ -1,6 +1,7 @@
 package first.robot.subsystems.pivot;
  
 import org.wpilib.command3.Mechanism;
+import org.wpilib.command3.Scheduler;
 import org.wpilib.util.Alert;
 import org.wpilib.util.Alert.Level;
 
@@ -22,6 +23,7 @@ public class Pivot implements Mechanism {
  
     public Pivot(PivotIO io) {
         this.io = io;
+        Scheduler.getDefault().addPeriodic(this::periodic);
     }
  
     public void periodic() {
@@ -58,6 +60,14 @@ public class Pivot implements Mechanism {
     /** Returns true if the pivot is within the given tolerance of the target angle. */
     public boolean atSetpoint(Rotation2d target, Rotation2d tolerance) {
         return Math.abs(inputs.position.minus(target).getRadians()) < tolerance.getRadians();
+    }
+
+    public double getLeaderTemperature(){
+      return inputs.leaderTempCelsius;
+    }
+
+    public double getFollowerTemperature(){
+      return inputs.followerTempCelsius;
     }
 
     
